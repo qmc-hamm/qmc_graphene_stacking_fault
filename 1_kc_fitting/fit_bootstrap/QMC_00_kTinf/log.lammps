@@ -1,0 +1,103 @@
+LAMMPS (23 Jun 2022 - Update 4)
+  using 16 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\pikki\AppData\Local\LAMMPS 64-bit 23Jun2022 with Python\plugins
+clear
+  using 16 OpenMP thread(s) per MPI task
+Loaded 1 plugins from C:\Users\pikki\AppData\Local\LAMMPS 64-bit 23Jun2022 with Python\plugins
+variable dump_file string "C:\Data\tblg_corrugation_qmc\1_kc_fitting\fit_bootstrap\QMC_00_kTinf\lmp_tmp\trj_lammps000001i40n1uns.bin"
+variable data_file string "C:\Data\tblg_corrugation_qmc\1_kc_fitting\fit_bootstrap\QMC_00_kTinf\lmp_tmp\data_lammps000001nyf_2gco"
+atom_style full
+units metal
+boundary p p p
+atom_modify sort 0 0.0
+read_data C:\Data\tblg_corrugation_qmc\1_kc_fitting\fit_bootstrap\QMC_00_kTinf\lmp_tmp\data_lammps000001nyf_2gco
+Reading data file ...
+  triclinic box = (0 0 0) to (2.46 2.1304225 20) with tilt (1.23 0 0)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  4 atoms
+Finding 1-2 1-3 1-4 neighbors ...
+  special bond factors lj:    0        0        0       
+  special bond factors coul:  0        0        0       
+     0 = max # of 1-2 neighbors
+     0 = max # of 1-3 neighbors
+     0 = max # of 1-4 neighbors
+     1 = max # of special neighbors
+  special bonds CPU = 0.000 seconds
+  read_data CPU = 0.009 seconds
+### interactions
+pair_style hybrid/overlay kolmogorov/crespi/full 16.0 1
+pair_coeff * * kolmogorov/crespi/full CH_taper.KC C C
+mass 1 12.011000
+mass 2 12.011000
+### run
+fix fix_nve all nve
+dump dump_all all custom 1 C:\Data\tblg_corrugation_qmc\1_kc_fitting\fit_bootstrap\QMC_00_kTinf\lmp_tmp\trj_lammps000001i40n1uns.bin id type x y z vx vy vz fx fy fz
+thermo_style custom step temp press cpu pxx pyy pzz pxy pxz pyz ke pe etotal vol lx ly lz atoms
+thermo_modify flush yes format float %23.16g
+thermo 1
+run 0
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- kolmogorov/crespi/full potential doi:10.1021/acs.nanolett.8b02848
+@Article{Ouyang2018
+ author = {W. Ouyang, D. Mandelli, M. Urbakh, and O. Hod},
+ title = {Nanoserpents: Graphene Nanoribbon Motion on Two-Dimensional Hexagonal Materials},
+ journal = {Nano Letters},
+ volume =  18,
+ pages =   {6009}
+ year =    2018,
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Neighbor list info ...
+  update every 1 steps, delay 10 steps, check yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 18
+  ghost atom cutoff = 18
+  binsize = 9, bins = 1 1 3
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair kolmogorov/crespi/full, perpetual
+      attributes: full, newton on, ghost
+      pair build: full/bin/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 27.4 | 27.4 | 27.4 Mbytes
+   Step          Temp          Press           CPU            Pxx            Pyy            Pzz            Pxy            Pxz            Pyz           KinEng         PotEng         TotEng         Volume           Lx             Ly             Lz          Atoms   
+         0                        0       13955.07670031341                       0       2569.845759432967       2569.845759432964       36725.53858207429   -5.01122000963863e-12  -3.112037613092552e-11  -1.140052717727469e-11                       0     0.08617692238696271     0.08617692238696271       104.8167866708382                    2.46       2.130422493309719                      20          4 
+Loop time of 1e-06 on 16 procs for 0 steps with 4 atoms
+
+0.0% CPU use with 1 MPI tasks x 16 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 0          | 0          | 0          |   0.0 |  0.00
+Bond    | 0          | 0          | 0          |   0.0 |  0.00
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0          | 0          | 0          |   0.0 |  0.00
+Output  | 0          | 0          | 0          |   0.0 |  0.00
+Modify  | 0          | 0          | 0          |   0.0 |  0.00
+Other   |            | 1e-06      |            |       |100.00
+
+Nlocal:              4 ave           4 max           4 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:           3884 ave        3884 max        3884 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:              0 ave           0 max           0 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:         3220 ave        3220 max        3220 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 3220
+Ave neighs/atom = 805
+Ave special neighs/atom = 0
+Neighbor list builds = 0
+Dangerous builds = 0
+print "__end_of_ase_invoked_calculation__"
+__end_of_ase_invoked_calculation__
+log /dev/stdout

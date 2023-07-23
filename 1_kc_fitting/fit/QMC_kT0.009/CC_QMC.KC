@@ -1,0 +1,6 @@
+# Refined parameters for Kolmogorov-Crespi Potential with taper function
+#
+# Cite as Krongchon, K., Rakib, T., Pathak, S., Ertekin, E., Johnson, H. T., & Wagner, L. K. (2023). arXiv preprint arXiv:2307.07210.
+#
+#                z0               C0               C2               C4               C               delta               lambda               A         S     rcut
+C C 3.341213015623465 24.582515815472107 13.291922770257433 1.285823105827899 0.000599078345489 0.867899022127286 3.276892097911134 14.159742602970553 1.0    2.0

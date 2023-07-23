@@ -1,0 +1,5 @@
+
+# Refined parameters for Kolmogorov-Crespi Potential with taper function
+#
+#                z0               C0               C2               C4               C               delta               lambda               A         S     rcut
+C C 3.356339024863470 23.727250822867941 13.101490800160907 0.083698777459233 2.310316496589286 0.855953896707014 3.195063451490547 14.860091797630838 1.0    2.0
