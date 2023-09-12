@@ -12,7 +12,7 @@ Supporting data for the publication:
   - Large interlayer spacing (for binding energy calculations):
     [`1_kc_fitting/fit/QMC_kTinf/CC_QMC.KC`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/1_kc_fitting/fit/QMC_kTinf/CC_QMC.KC)
   
-3. Relaxed twisted bilayer graphene structured from QMC-trained potential: [`2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt)
+3. Relaxed twisted bilayer graphene structure from QMC-trained potential: [`2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt)
 
 
 
