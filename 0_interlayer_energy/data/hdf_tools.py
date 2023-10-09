@@ -42,7 +42,7 @@ def get_lattice_vectors(a=2.46):
         [0, 0, 0]
         ]
 
-def make_hdf(csv_name='qmc.csv', hdf_output='qmc.hdf', ntiling=3):
+def make_hdf(csv_name='qmc.csv', hdf_name='qmc.hdf', ntiling=3):
     '''
     Creates HDF file with data from the specified `csv_name`
     Coordinates `coords` are generated from the supercell `(ntiling, ntiling, 1)`
@@ -71,7 +71,7 @@ def make_hdf(csv_name='qmc.csv', hdf_output='qmc.hdf', ntiling=3):
         data['atomic_numbers'].append(atomic_numbers)
         data['ntiling'].append(ntiling)
 
-    with h5py.File(hdf_output, 'w') as hdf:
+    with h5py.File(hdf_name, 'w') as hdf:
         for k, v in data.items():
             v = np.array(v)
             hdf.create_dataset(k, data=v, dtype=v.dtype)
@@ -96,5 +96,5 @@ def read_hdf(hdf_name):
     atoms.write('test_read.xyz')
 
 if __name__ == '__main__':
-    make_hdf()
-    # read_hdf('qmc.hdf')
+    make_hdf(hdf_name='qmc.hdf')
+    # read_hdf(hdf_name='qmc.hdf')
