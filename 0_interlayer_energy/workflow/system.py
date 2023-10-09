@@ -40,7 +40,7 @@ def get_lattice_vectors(a, c):
         [0, 0, c]
         ]
 
-def create_graphene_geom(a, d, disregistry, qmc_kgrid, tiling, c=15, kshift=0.0, zshift='CM'):
+def create_graphene_geom(a, d, disregistry, qmc_kgrid, tiling, c=20, kshift=0.0, zshift='CM'):
     '''
     Creates a Nexus geometry object for the Nexus-monitored SCF and Monte Carlo workflow
     '''
