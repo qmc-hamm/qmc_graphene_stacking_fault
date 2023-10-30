@@ -15,8 +15,10 @@ jobs:
           python-version: "3.10.13"
       - name: Install dependencies
         run: pip install ase h5py pandas numpy
+      - name: Change Working Directory
+        run: cd 0_interlayer_energy/data/
       - name: Run HDF function
-        run: python ./0_interlayer_energy/data/hdf_tools.py
+        run: python hdf_tools.py
       - name: Upload to S3
         env:
           AWS_S3_ENDPOINT: ${{ secrets.AWS_S3_ENDPOINT }}
@@ -26,4 +28,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_S3_USE_PATH_STYLE_ENDPOINT: true
         run: |
-          aws s3 cp ./0_interlayer_energy/qmc.hdf s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf
+          aws s3 cp qmc.hdf s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf
