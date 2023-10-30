@@ -1,0 +1,58 @@
+name: Publish HDF Data to S3 and MDF
+
+env:
+  AWS_ENDPOINT_URL: ${{ secrets.AWS_S3_ENDPOINT }}
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+  AWS_S3_BUCKET_PATH: ${{ secrets. AWS_S3_BUCKET_PATH }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  GLOBUS_CLIENT_ID: ${{ secrets.GLOBUS_CLIENT_ID }}
+  GLOBUS_CLIENT_SECRET: ${{ secrets.GLOBUS_CLIENT_SECRET }}
+  AWS_S3_USE_PATH_STYLE_ENDPOINT: true
+  AWS_EC2_METADATA_DISABLED: true
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  run_hdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.13"
+      - name: Install dependencies
+        run: pip install ase h5py pandas numpy boto3
+      - name: Run HDF function
+        run: |
+          cd 0_interlayer_energy/data/
+          python hdf_tools.py
+      - name: Upload to S3
+        run: |
+          aws s3 cp ./0_interlayer_energy/data/qmc.hdf s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf
+  generate_url:
+    needs: run_hdf
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Presigned S3 URL
+        run: |
+          url=$(aws s3 presign s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf --expires-in 300)
+          echo "$url" >> $GITHUB_STATE
+  upload_to_mdf:
+    needs: generate_url
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.13"
+      - name: Install dependencies
+        run: pip install mdf_connect_client mdf_toolbox
+      - name: Run Publish Script
+        run: |
+          echo $url
+          python mdf_publish.py --client_id=$GLOBUS_CLIENT_ID --client_secret=$GLOBUS_CLIENT_SECRET --source=$url --update --test
