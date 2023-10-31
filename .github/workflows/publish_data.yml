@@ -29,4 +29,5 @@ jobs:
           AWS_S3_USE_PATH_STYLE_ENDPOINT: true
           AWS_EC2_METADATA_DISABLED: true
         run: |
-          aws s3 cp ./0_interlayer_energy/data/qmc.hdf s3://$AWS_S3_BUCKET$AWS_S3_BUCKET_PATH${GITHUB_REF#refs/tags/}.hdf
+          echo $AWS_S3_ENDPOINT $AWS_S3_BUCKET $AWS_S3_BUCKET_PATH $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+          aws s3 cp ./0_interlayer_energy/data/qmc.hdf s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf
