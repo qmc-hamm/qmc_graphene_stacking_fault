@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: "3.10.13"
       - name: Install dependencies
-        run: pip install ase h5py pandas numpy
+        run: pip install ase h5py pandas numpy boto3
       - name: Run HDF function
         run: |
           cd 0_interlayer_energy/data/
