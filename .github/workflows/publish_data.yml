@@ -43,6 +43,13 @@ jobs:
     needs: generate_url
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.13"
+      - name: Install dependencies
+        run: pip install mdf_connect_client mdf_toolbox
       - name: Run Publish Script
         run: |
           echo $url
