@@ -1,4 +1,4 @@
-name: Publish Make HDF Data
+name: Publish HDF Data to S3 and MDF
 
 env:
   AWS_ENDPOINT_URL: ${{ secrets.AWS_S3_ENDPOINT }}
