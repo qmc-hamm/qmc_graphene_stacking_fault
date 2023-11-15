@@ -38,12 +38,12 @@ jobs:
       - name: Generate Presigned S3 URL
         run: |
           url=$(aws s3 presign s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf --expires-in 300)
-          echo "::set-output name=url::$url"
+          echo "$url" >> $GITHUB_STATE
   upload_to_mdf:
     needs: generate_url
     runs-on: ubuntu-latest
     steps:
       - name: Run Publish Script
         run: |
-          echo ${needs.upload_to_s3.outputs.url}
-          python mdf_publish.py --client_id=$GLOBUS_CLIENT_ID --client_secret=$GLOBUS_CLIENT_SECRET --source=${needs.generate_url.outputs.url} --update
+          echo $url
+          python mdf_publish.py --client_id=$GLOBUS_CLIENT_ID --client_secret=$GLOBUS_CLIENT_SECRET --source=$url --update
