@@ -28,22 +28,22 @@ jobs:
         run: |
           cd 0_interlayer_energy/data/
           python hdf_tools.py
-  upload_to_s3:
-    needs: run_hdf
-    runs-on: ubuntu-latest
-    steps:
       - name: Upload to S3
         run: |
           aws s3 cp ./0_interlayer_energy/data/qmc.hdf s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf
+  generate_url:
+    needs: run_hdf
+    runs-on: ubuntu-latest
+    steps:
       - name: Generate Presigned S3 URL
         run: |
           url=$(aws s3 presign s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf --expires-in 300)
           echo "::set-output name=url::$url"
   upload_to_mdf:
-    needs: upload_to_s3
+    needs: generate_url
     runs-on: ubuntu-latest
     steps:
       - name: Run Publish Script
         run: |
           echo ${needs.upload_to_s3.outputs.url}
-          python mdf_publish.py --client_id=$GLOBUS_CLIENT_ID --client_secret=$GLOBUS_CLIENT_SECRET --source=${needs.upload_to_s3.outputs.url} --update
+          python mdf_publish.py --client_id=$GLOBUS_CLIENT_ID --client_secret=$GLOBUS_CLIENT_SECRET --source=${needs.generate_url.outputs.url} --update
