@@ -23,8 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Push and Publish Step
-        uses: materials-data-facility/publish-action@1.0
-        id: push_publish
+        uses: materials-data-facility/publish-action@v1
         with:
           globus_auth_client_id: ${{ env.GLOBUS_CLIENT_ID }}
           globus_auth_secret: ${{ env.GLOBUS_CLIENT_SECRET }}
