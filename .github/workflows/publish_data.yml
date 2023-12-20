@@ -27,7 +27,7 @@ jobs:
         with:
           globus_auth_client_id: ${{ env.GLOBUS_CLIENT_ID }}
           globus_auth_secret: ${{ env.GLOBUS_CLIENT_SECRET }}
-          files_to_publish: "/O_interlayer_energy/data/qmc.csv"
+          files_to_publish: "./O_interlayer_energy/data/qmc.csv"
           mdf_source_id: ""
           mdf_title: "Test"
           mdf_authors: "Shriram, Ben"
