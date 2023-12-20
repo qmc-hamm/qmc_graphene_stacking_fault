@@ -16,43 +16,26 @@ on:
     types: [published]
 
 jobs:
-  run_hdf:
+  push_publish_job:
     runs-on: ubuntu-latest
+    name: Job to Push Data to Object Store and Publish to MDF
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Push and Publish Step
+        uses: materials-data-facility/publish-action@1.0
+        id: push_publish
         with:
-          python-version: "3.10.13"
-      - name: Install dependencies
-        run: pip install ase h5py pandas numpy boto3
-      - name: Run HDF function
-        run: |
-          cd 0_interlayer_energy/data/
-          python hdf_tools.py
-      - name: Upload to S3
-        run: |
-          aws s3 cp ./0_interlayer_energy/data/qmc.hdf s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf
-  generate_url:
-    needs: run_hdf
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate Presigned S3 URL
-        run: |
-          url=$(aws s3 presign s3://$AWS_S3_BUCKET/$AWS_S3_BUCKET_PATH/${GITHUB_REF#refs/tags/}.hdf --expires-in 300)
-          echo "$url" >> $GITHUB_STATE
-  upload_to_mdf:
-    needs: generate_url
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10.13"
-      - name: Install dependencies
-        run: pip install mdf_connect_client mdf_toolbox
-      - name: Run Publish Script
-        run: |
-          echo $url
-          python mdf_publish.py --client_id=$GLOBUS_CLIENT_ID --client_secret=$GLOBUS_CLIENT_SECRET --source=$url --update --test
+          globus_auth_client_id: ${{ env.GLOBUS_CLIENT_ID }}
+          globus_auth_secret: ${{ env.GLOBUS_CLIENT_SECRET }}
+          files_to_publish: "README.md"
+          mdf_source_id: ""
+          mdf_title: "Test"
+          mdf_authors: "Shriram, Ben"
+          mdf_affiliations: "UIUC, NCSA"
+          mdf_publication_year: "2023"
+          staging_object_store_url: ${{ env.AWS_ENDPOINT_URL }}
+          aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          s3_bucket_id: ${{ env.AWS_S3_BUCKET }}
+          s3_bucket_path: ${{ env.AWS_S3_BUCKET_PATH }}
