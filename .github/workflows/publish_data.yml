@@ -22,18 +22,36 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - name: Install Dependencies
+        run: pip install -r 0_interlayer_energy/hdftools_requirements.txt
+
+      - name: Create HDF5 files
+        working-directory: ./0_interlayer_energy/data
+        run:  python hdf_tools.py
+
       - name: Push and Publish Step
-        uses: materials-data-facility/publish-action@1.0
+        uses: materials-data-facility/publish-action@v1.2
         id: push_publish
         with:
           globus_auth_client_id: ${{ env.GLOBUS_CLIENT_ID }}
           globus_auth_secret: ${{ env.GLOBUS_CLIENT_SECRET }}
-          files_to_publish: "README.md"
-          mdf_source_id: ""
-          mdf_title: "Test"
-          mdf_authors: "Shriram, Ben"
-          mdf_affiliations: "UIUC, NCSA"
+          mdf_source_id: "_test_krongchon_registrydependent_potential_carlo_v1.1"
+          mdf_title: "Registry-dependent potential energy and lattice corrugation of twisted bilayer graphene from quantum Monte Carlo"
+          mdf_authors: "Kittithat Krongchon, Tawfiqur Rakib, Shivesh Pathak,  Elif Ertekin,  Harley T. Johnson, Lucas K. Wagner"
+          mdf_affiliations: "University of Illinois Urbana Champaign"
           mdf_publication_year: "2023"
+          related_dois: "10.48550/arXiv.2307.07210"
+
+          paths_to_publish: "0_interlayer_energy/data"
+
+          is_test: true
+
           staging_object_store_url: ${{ env.AWS_ENDPOINT_URL }}
           aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
