@@ -23,6 +23,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Determine if this is a pre-release test run
+        run: |
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            echo "Setting IS_TEST_SUBMIT for prerelease"
+            echo "IS_TEST_SUBMIT=true" >> $GITHUB_ENV
+          else
+            echo "Setting IS_TEST_SUBMIT for official release"
+            echo "IS_TEST_SUBMIT=false" >> $GITHUB_ENV
+
       - name: Install Python
         uses: actions/setup-python@v4
         with:
@@ -46,11 +55,11 @@ jobs:
           mdf_authors: "Kittithat Krongchon, Tawfiqur Rakib, Shivesh Pathak,  Elif Ertekin,  Harley T. Johnson, Lucas K. Wagner"
           mdf_affiliations: "University of Illinois Urbana Champaign"
           mdf_publication_year: "2023"
-          related_dois: "10.48550/arXiv.2307.07210"
+          related_dois: "10.1103/PhysRevB.108.235403"
 
           paths_to_publish: "0_interlayer_energy/data"
 
-          is_test: true
+          is_test: ${{ env.IS_TEST_SUBMIT }}
 
           staging_object_store_url: ${{ env.AWS_ENDPOINT_URL }}
           aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
