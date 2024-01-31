@@ -51,7 +51,6 @@ jobs:
         with:
           globus_auth_client_id: ${{ env.GLOBUS_CLIENT_ID }}
           globus_auth_secret: ${{ env.GLOBUS_CLIENT_SECRET }}
-          mdf_source_id: "_test_krongchon_registrydependent_potential_carlo_v1.1"
           mdf_title: "Registry-dependent potential energy and lattice corrugation of twisted bilayer graphene from quantum Monte Carlo"
           mdf_authors: "Kittithat Krongchon, Tawfiqur Rakib, Shivesh Pathak,  Elif Ertekin,  Harley T. Johnson, Lucas K. Wagner"
           mdf_affiliations: "University of Illinois Urbana Champaign"
