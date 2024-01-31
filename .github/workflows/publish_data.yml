@@ -1,0 +1,69 @@
+name: Publish HDF Data to S3 and MDF
+
+env:
+  AWS_ENDPOINT_URL: ${{ secrets.AWS_S3_ENDPOINT }}
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+  AWS_S3_BUCKET_PATH: ${{ secrets. AWS_S3_BUCKET_PATH }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  GLOBUS_CLIENT_ID: ${{ secrets.GLOBUS_CLIENT_ID }}
+  GLOBUS_CLIENT_SECRET: ${{ secrets.GLOBUS_CLIENT_SECRET }}
+  AWS_S3_USE_PATH_STYLE_ENDPOINT: true
+  AWS_EC2_METADATA_DISABLED: true
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  push_publish_job:
+    runs-on: ubuntu-latest
+    name: Job to Push Data to Object Store and Publish to MDF
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine if this is a pre-release test run
+        run: |
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            echo "Setting IS_TEST_SUBMIT for prerelease"
+            echo "IS_TEST_SUBMIT=true" >> $GITHUB_ENV
+          else
+            echo "Setting IS_TEST_SUBMIT for official release"
+            echo "IS_TEST_SUBMIT=false" >> $GITHUB_ENV
+          fi
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - name: Install Dependencies
+        run: pip install -r 0_interlayer_energy/hdftools_requirements.txt
+
+      - name: Create HDF5 files
+        working-directory: ./0_interlayer_energy/data
+        run:  python hdf_tools.py
+
+      - name: Push and Publish Step
+        uses: materials-data-facility/publish-action@v1.2
+        id: push_publish
+        with:
+          globus_auth_client_id: ${{ env.GLOBUS_CLIENT_ID }}
+          globus_auth_secret: ${{ env.GLOBUS_CLIENT_SECRET }}
+          mdf_source_id: "_test_krongchon_registrydependent_potential_carlo_v1.1"
+          mdf_title: "Registry-dependent potential energy and lattice corrugation of twisted bilayer graphene from quantum Monte Carlo"
+          mdf_authors: "Kittithat Krongchon, Tawfiqur Rakib, Shivesh Pathak,  Elif Ertekin,  Harley T. Johnson, Lucas K. Wagner"
+          mdf_affiliations: "University of Illinois Urbana Champaign"
+          mdf_publication_year: "2023"
+          related_dois: "10.1103/PhysRevB.108.235403"
+
+          paths_to_publish: "0_interlayer_energy/data"
+
+          is_test: ${{ env.IS_TEST_SUBMIT }}
+
+          staging_object_store_url: ${{ env.AWS_ENDPOINT_URL }}
+          aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          s3_bucket_id: ${{ env.AWS_S3_BUCKET }}
+          s3_bucket_path: ${{ env.AWS_S3_BUCKET_PATH }}
