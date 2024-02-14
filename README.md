@@ -1,5 +1,8 @@
 Supporting data for the publication:
-    [https://arxiv.org/abs/2307.07210](https://arxiv.org/abs/2307.07210).
+    [https://doi.org/10.1103/PhysRevB.108.235403](https://doi.org/10.1103/PhysRevB.108.235403).
+
+Data pubished to Materials Data Facility:
+    [https://commons.datacite.org/doi.org/10.18126/otff-eyc8](https://commons.datacite.org/doi.org/10.18126/otff-eyc8)
 
 ### Links to recommended files: 
 
