@@ -1,6 +1,6 @@
-# Refined parameters for Kolmogorov-Crespi Potential with taper function
+# Parameters for Kolmogorov-Crespi potential trained with quantum Monte Carlo data
 #
-# Cite as Krongchon, K., Rakib, T., Pathak, S., Ertekin, E., Johnson, H. T., & Wagner, L. K. (2023). arXiv preprint arXiv:2307.07210.
+# Cite as Krongchon, K., Rakib, T., Pathak, S., Ertekin, E., Johnson, H. T., & Wagner, L. K. Phys. Rev. B 108, 235403 (2023)
 #
 #                z0               C0               C2               C4               C               delta               lambda               A         S     rcut
 C C 3.333769437517853 24.960050344431696 14.283750537233525 4.754304232061039 0.000000101012573 0.791289557628886 3.277724400366237 14.214446975034571 1.0    2.0

@@ -59,9 +59,9 @@ def write_kc_potential(z0, C0, C2, C4, C, delta, lamda, A, kc_filename='CH_taper
     params = [z0, C0, C2, C4, C, delta, lamda, A]
     headers = '               '.join(['', 'z0', 'C0', 'C2', 'C4', 'C', 'delta', 'lambda', 'A'])
     with open(kc_filename, 'w') as f:
-        lines = ['# Refined parameters for Kolmogorov-Crespi Potential with taper function', '#']
+        lines = ['# Parameters for Kolmogorov-Crespi potential trained with quantum Monte Carlo data', '#']
         if cite:
-            lines += ['# Cite as Krongchon, K., Rakib, T., Pathak, S., Ertekin, E., Johnson, H. T., & Wagner, L. K. (2023). arXiv preprint arXiv:2307.07210.', '#']
+            lines += ['# Cite as Krongchon, K., Rakib, T., Pathak, S., Ertekin, E., Johnson, H. T., & Wagner, L. K. Phys. Rev. B 108, 235403 (2023)', '#']
         lines += [f'# {headers}         S     rcut', f'C C {format_params(params)} 1.0    2.0']
         f.write('\n'.join(lines))
 
