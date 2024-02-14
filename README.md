@@ -6,16 +6,17 @@ Data pubished to Materials Data Facility:
 
 ### Links to recommended files: 
 
-1. Interlayer energy of bilayer graphene from QMC
-[`0_interlayer_energy/data/qmc.csv`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/0_interlayer_energy/data/qmc.csv)
+1. Interlayer energy of bilayer graphene from QMC:
+   - [`0_interlayer_energy/data/qmc.csv`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/0_interlayer_energy/data/qmc.csv)
 
-2. Kolmogorov-Crespi potential parameters for LAMMPS
+3. Kolmogorov-Crespi potential parameters for LAMMPS
   - Near equilibrium interlayer spacing (for relaxation calculations):
-    [`1_kc_fitting/fit/QMC_kT0.004/CC_QMC.KC`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/1_kc_fitting/fit/QMC_kT0.004/CC_QMC.KC)
+    - [`1_kc_fitting/fit/QMC_kT0.004/CC_QMC.KC`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/1_kc_fitting/fit/QMC_kT0.004/CC_QMC.KC)
   - Large interlayer spacing (for binding energy calculations):
-    [`1_kc_fitting/fit/QMC_kTinf/CC_QMC.KC`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/1_kc_fitting/fit/QMC_kTinf/CC_QMC.KC)
+    - [`1_kc_fitting/fit/QMC_kTinf/CC_QMC.KC`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/1_kc_fitting/fit/QMC_kTinf/CC_QMC.KC)
   
-3. Relaxed twisted bilayer graphene structure from QMC-trained potential: [`2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt)
+3. Relaxed twisted bilayer graphene structure from QMC-trained potential:
+   - [`2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt`](https://github.com/qmc-hamm/qmc_graphene_stacking_fault/blob/main/2_optimized_geometry/kc_qmc/0-99/poscar_hex.txt)
 
 
 
